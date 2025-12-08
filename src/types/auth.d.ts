@@ -1,3 +1,5 @@
+// src/types/auth.ts
+
 // Definición del Área
 export interface Area {
     id: number;
@@ -5,10 +7,11 @@ export interface Area {
     code: string;
 }
 
-// Definición del Rol (Puede ser string o objeto dependiendo de tu recurso Laravel)
+// Definición del Rol
 export interface Role {
     id: number;
     name: string;
+    guard_name?: string;
 }
 
 // Definición del Usuario Completo
@@ -26,14 +29,13 @@ export interface User {
     position: string;
     is_active: boolean;
     hire_date?: string | null;
-
-    // Relaciones
-    area: Area;
-    roles: any[]; // Usamos any[] por flexibilidad, o Role[] si tu API devuelve objetos
-    permissions: string[]; // Lista de permisos: ["crear-usuarios", "ver-reportes"]
+    area_id?: number; 
+    area?: Area; // Puede ser opcional si el usuario no tiene área asignada
+    roles: Role[]; 
+    permissions: any[]; 
 }
 
-// === ESTA ES LA INTERFAZ QUE TE FALTABA ===
+// Respuesta del Login
 export interface LoginResponse {
     status: string;
     message: string;
