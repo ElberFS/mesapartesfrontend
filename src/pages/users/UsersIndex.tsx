@@ -8,9 +8,6 @@ import {
     ChevronLeft, ChevronRight 
 } from 'lucide-react';
 
-// YA NO IMPORTAMOS EL MODAL
-// import UserPermissionsModal from '../../components/users/UserPermissionsModal'; 
-
 export default function UsersIndex() {
     const [users, setUsers] = useState<User[]>([]);
     const [loading, setLoading] = useState(true);
@@ -18,9 +15,6 @@ export default function UsersIndex() {
     const [totalPages, setTotalPages] = useState(1);
     const [searchTerm, setSearchTerm] = useState('');
     
-    // YA NO NECESITAMOS ESTE ESTADO
-    // const [selectedUser, setSelectedUser] = useState<User | null>(null);
-
     const { user: currentUser } = useAuth();
 
     useEffect(() => {
@@ -139,15 +133,17 @@ export default function UsersIndex() {
                                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                             <div className="flex justify-center gap-2">
                                                 
-                                                {/* BOTÓN "VER PERMISOS" ELIMINADO */}
+                                                {/* --- AQUÍ SE AGREGÓ EL PERMISO PARA EDITAR --- */}
+                                                {currentUser?.permissions.includes('editar-usuarios') && (
+                                                    <Link 
+                                                        to={`/dashboard/users/${u.id}/edit`} 
+                                                        className="p-2 text-indigo-600 hover:bg-indigo-50 rounded-full transition"
+                                                        title="Editar"
+                                                    >
+                                                        <Edit2 size={18} />
+                                                    </Link>
+                                                )}
 
-                                                <Link 
-                                                    to={`/dashboard/users/${u.id}/edit`} 
-                                                    className="p-2 text-indigo-600 hover:bg-indigo-50 rounded-full transition"
-                                                    title="Editar"
-                                                >
-                                                    <Edit2 size={18} />
-                                                </Link>
                                                 {currentUser?.permissions.includes('eliminar-usuarios') && (
                                                     <button 
                                                         onClick={() => handleDelete(u.id)} 
@@ -204,8 +200,6 @@ export default function UsersIndex() {
                     </div>
                 </div>
             </div>
-
-            {/* MODAL ELIMINADO */}
         </div>
     );
 }
